@@ -1,7 +1,3 @@
-let page = document.getElementById("buttonDiv");
-let selectedClassName = "current";
-const presetButtonColors = ["#3aa757", "#e8453c", "#f9bb2d", "#4688f1"];
-
 // Reacts to a button click by marking the selected button and saving
 // the selection
 function handleButtonClick(event) {
@@ -19,28 +15,86 @@ function handleButtonClick(event) {
   chrome.storage.sync.set({ color });
 }
 
-// Add a button to the page for each supplied color
-function constructOptions(buttonColors) {
-  chrome.storage.sync.get("color", (data) => {
-    let currentColor = data.color;
-    // For each color we were provided…
-    for (let buttonColor of buttonColors) {
-      // …create a button with that color…
-      let button = document.createElement("button");
-      button.dataset.color = buttonColor;
-      button.style.backgroundColor = buttonColor;
+// Initialize the page by constructing the color options
 
-      // …mark the currently selected color…
-      if (buttonColor === currentColor) {
-        button.classList.add(selectedClassName);
-      }
 
-      // …and register a listener for when that button is clicked
-      button.addEventListener("click", handleButtonClick);
-      page.appendChild(button);
-    }
-  });
+/* Select */
+const formSelectCoin = document.getElementById("select-coin");
+let dropdown = document.getElementById('coins-dropdown');
+dropdown.length = 0;
+
+let defaultOption = document.createElement('option');
+defaultOption.text = 'Choose Coin';
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+const url = 'https://api.coingecko.com/api/v3/coins/list';
+
+async function getCoinList(){
+  return fetch(url)
+  .then(response => {
+    if (!response.ok) { throw response }
+    return response.json()
+  })
+  .catch(error => console.log(error))
 }
 
-// Initialize the page by constructing the color options
-constructOptions(presetButtonColors);
+async function populateSelectCoin() {
+  const data = await getCoinList();
+  if(data){
+    let option;
+    for (let i = 0; i < data.length; i++) {
+      option = document.createElement('option');
+      option.text = data[i].name;
+      option.value = data[i].id;
+      dropdown.add(option);
+    } 
+  }
+}
+
+populateSelectCoin();
+
+chrome.storage.local.clear(function() {
+  var error = chrome.runtime.lastError;
+  if (error) {
+      console.error(error);
+  }
+});
+
+function addCoinToStorage(coin){ 
+  
+  chrome.storage.sync.get(['coins'], function(result) {
+    console.log('Value currently is ' + result.coins);
+    
+    if(result.coins) {
+      console.log("tem coins", result.coins)      
+      const newArray = [...result.coins, coin]
+
+      chrome.storage.sync.set({'coins': newArray}, function() {
+        console.log('Value is set to ' + coin);
+      }); 
+      
+    } else {
+      chrome.storage.sync.set({'coins': [ coin ]}, function() {
+        console.log('Value is set to ' + coin);
+      }); 
+    }
+  });
+  
+}
+
+chrome.storage.onChanged.addListener(function(changes) {
+  var storageChange = changes['coins'];
+  console.log('New coind added ' +
+              'Old value was "%s", new value is "%s".',
+              storageChange.oldValue,
+              storageChange.newValue); 
+});
+
+formSelectCoin.addEventListener("submit", function(evt) {
+  evt.preventDefault();
+  console.log(evt.target[0].value)
+  addCoinToStorage(evt.target[0].value)
+});
+/* Select */
