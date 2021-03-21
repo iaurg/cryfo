@@ -31,7 +31,7 @@
 </div>
 
 ## Key Features
----
+
 * Save Cryptos
   - Select your prefered cryptocurrencies and fast see their status.
 * Available Exchanges
@@ -41,23 +41,23 @@
 
 
 ## How To Use
----
+
 - Install extension on your browser.
 - Access the extension options and add your prefered coins to follow.
 
 ## Download
----
+
 You can [download](#update-link) the latest installable version extension for Chrome or Firefox.
 
 ## Credits
----
+
 This software uses the following technologies:
 
 - [Chrome Extension](https://developer.chrome.com/docs/extensions)
 - [CoinGecko](https://www.coingecko.com/en/api)
 
 ## License
----
+
 [MIT](./LICENSE)
 
 
