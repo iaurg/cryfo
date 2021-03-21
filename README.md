@@ -25,7 +25,10 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](./images/screenshot.png)
+<div align="center">
+    <img src="./images/screenshot.png"
+      alt="Extension Screenshot" />
+</div>
 
 ## Key Features
 ---
