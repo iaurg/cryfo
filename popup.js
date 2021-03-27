@@ -30,9 +30,7 @@ function constructCoinModel(image, symbol, name, price, change) {
 }
 
 function getSelectedCoins() {
-  chrome.storage.sync.get("coins", ({ coins }) => {
-    console.log(coins)
-  });
+  chrome.storage.sync.get("coins");
 }
 
 function fillTable(coins) {
