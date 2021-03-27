@@ -34,8 +34,6 @@
 
 * Save Cryptos
   - Select your prefered cryptocurrencies and fast see their status.
-* Available Exchanges
-  - Get a list of all exchanges that trade your cryptos.
 * Real-time status for each data
 * No login required, all data saved locally.
 
