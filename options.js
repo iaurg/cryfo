@@ -13,7 +13,7 @@ defaultOption.text = 'Choose Coin';
 dropdown.add(defaultOption);
 dropdown.selectedIndex = 0;
 
-const url = 'https://api.coingecko.com/api/v3/coins/list';
+const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=gecko_desc&per_page=250';
 
 async function getCoinList(){
   return fetch(url)
@@ -57,11 +57,7 @@ function deleteCoinFromStorage(id) {
   chrome.storage.sync.get(['coins'], function(result) {
     if(result.coins) {
       const filterResult = result.coins.filter(coin => coin.id !== id)
-      console.log(filterResult)
-
-      chrome.storage.sync.set({'coins': filterResult}, function() {
-        console.log('Value is set to ' + coin);
-      });      
+      chrome.storage.sync.set({'coins': filterResult});      
     }
   });
   location.reload()
