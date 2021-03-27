@@ -20,7 +20,7 @@
   background: var(--white-bg-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
-  width: 23.75rem;
+  max-width: 23.75rem;
 }
 
 .select-coin button {

@@ -41,6 +41,8 @@ h2 {
   border-radius:8px;
   width: 90%;
   margin: 1rem 0;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 
 #coin-table {

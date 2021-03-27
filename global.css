@@ -11,6 +11,40 @@
   --success-color: #00d69a;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 40px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #fff;
+}
+::-webkit-scrollbar-track {
+  background: #f4f9fd;
+  border: 0px none #ffffff;
+  border-radius: 51px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #f4f9fd;
+}
+::-webkit-scrollbar-track:active {
+  background: #fff;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 * {
   margin:0;
   padding:0;
