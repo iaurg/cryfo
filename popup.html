@@ -6,8 +6,34 @@
 </head>
 <body>
   <main>
+    <header>
+      <h2>Tracking</h2>
+    </header>
     <section class="content">
-      <h3>Tracking</h3>
+      <main class="tracked-coins">
+        <table id="coin-table">
+          <thead>
+            <th>USDT Market</th>
+            <th>Price</th>
+            <th>Change (24h)</th>
+          </thead>
+          <tr id="coin-data">
+            <td class="coin-market">
+              <img class="coin-image" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="bitcoin">
+              <div class="coin-identifiers">
+                <span class="coin-identifiers--symbol">BTC</span>
+                <span class="coin-identifiers--name">Bitcoin</span>
+              </div>
+            </td>
+            <td>
+              <span class="coin-price">$ 9,138.82</span>
+            </td>     
+            <td class="coin-change">
+              <span class="coin-change--positive">2.93%</span>
+            </td>       
+          </tr>
+        </table>
+      </main>
     </section>
   </main>
 </body>
