@@ -1,23 +1,3 @@
-// Reacts to a button click by marking the selected button and saving
-// the selection
-
-/*
-function handleButtonClick(event) {
-  // Remove styling from the previously selected color
-  let current = event.target.parentElement.querySelector(
-    `.${selectedClassName}`
-  );
-  if (current && current !== event.target) {
-    current.classList.remove(selectedClassName);
-  }
-
-  // Mark the button as selected
-  let color = event.target.dataset.color;
-  event.target.classList.add(selectedClassName);
-  chrome.storage.sync.set({ color });
-}
-*/
-
 /*---- Target DOM Elements ----*/
 
 let divCoins = document.getElementById('selected-coins')
@@ -63,19 +43,11 @@ populateSelectCoin();
 
 function addCoinToStorage(coin){  
   chrome.storage.sync.get(['coins'], function(result) {
-    //console.log('Value currently is ' + result.coins);    
     if(result.coins) {
-      // console.log("tem coins", result.coins)      
       const newArray = [...result.coins, coin]
-
-      chrome.storage.sync.set({'coins': newArray}, function() {
-        console.log('Value is set to ' + coin);
-      }); 
-      
+      chrome.storage.sync.set({'coins': newArray}); 
     } else {
-      chrome.storage.sync.set({'coins': [ coin ]}, function() {
-        console.log('Value is set to ' + coin);
-      }); 
+      chrome.storage.sync.set({'coins': [ coin ]}); 
     }
   });
   location.reload()
@@ -83,12 +55,10 @@ function addCoinToStorage(coin){
 
 function deleteCoinFromStorage(id) {
   chrome.storage.sync.get(['coins'], function(result) {
-    //console.log('Value currently is ' + result.coins);    
     if(result.coins) {
-      // console.log("tem coins", result.coins)   
       const filterResult = result.coins.filter(coin => coin.id !== id)
       console.log(filterResult)
-            
+
       chrome.storage.sync.set({'coins': filterResult}, function() {
         console.log('Value is set to ' + coin);
       });      
@@ -104,17 +74,6 @@ formSelectCoin.addEventListener("submit", function(evt) {
   const { text:name, value:id } = dropdown.options[dropdown.selectedIndex]
   addCoinToStorage({ id, name })
 });
-
-/*
-chrome.storage.onChanged.addListener(function(changes) {
-  var storageChange = changes['coins'];
-  console.log('New coind added ' +
-              'Old value was "%s", new value is "%s".',
-              storageChange.oldValue,
-              storageChange.newValue); 
-});
-*/
-
 
 /*---- Crate selected Coin List ----*/
 
@@ -144,6 +103,7 @@ function populateSelecteds() {
 }
 
 /* Run on Start */
+
 populateSelecteds();
 
 /*---- Clear storage Functions ----*/
@@ -157,5 +117,3 @@ chrome.storage.local.clear(function() {
 
 // chrome.storage.local.clear()
 // chrome.storage.sync.clear()
-
-/*---- Clear storage Functions ----*/
