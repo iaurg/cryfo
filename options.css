@@ -20,6 +20,7 @@
   background: var(--white-bg-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
+  width: 23.75rem;
 }
 
 .select-coin button {
@@ -33,4 +34,25 @@
 
 .select-coin button:hover {
   filter: brightness(0.9)
+}
+
+#selected-coins {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.coin-item {
+  background: var(--light-bg-color);
+  padding: 0.5rem;  
+  font-size: 0.875rem;
+  border-radius: 0.25rem;  
+  margin: 0.5rem;
+}
+
+.coin-item button {
+  border:none;
+  color: var(--content-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
 }
