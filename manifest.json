@@ -6,7 +6,10 @@
   "background": {
     "service_worker": "background.js"
   },
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "permissions": ["storage", "scripting"],
   "action": {
     "default_popup": "popup.html",
