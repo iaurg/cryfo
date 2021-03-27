@@ -1,4 +1,3 @@
-//chrome.runtime.connect({ name: "popup" });
 const apiUrl = "https://api.coingecko.com/api/v3/"
 const tableElement = document.getElementById("coin-table")
 
