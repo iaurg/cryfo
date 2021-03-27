@@ -1,5 +1,7 @@
 // Reacts to a button click by marking the selected button and saving
 // the selection
+
+/*
 function handleButtonClick(event) {
   // Remove styling from the previously selected color
   let current = event.target.parentElement.querySelector(
@@ -14,15 +16,17 @@ function handleButtonClick(event) {
   event.target.classList.add(selectedClassName);
   chrome.storage.sync.set({ color });
 }
+*/
 
-// Initialize the page by constructing the color options
+/*---- Target DOM Elements ----*/
 
-
-/* Select */
-const formSelectCoin = document.getElementById("select-coin");
+let divCoins = document.getElementById('selected-coins')
 let dropdown = document.getElementById('coins-dropdown');
-dropdown.length = 0;
+const formSelectCoin = document.getElementById("select-coin");
 
+
+/*---- Create and Fill Select Coin Options ----*/
+dropdown.length = 0;
 let defaultOption = document.createElement('option');
 defaultOption.text = 'Choose Coin';
 
@@ -55,20 +59,13 @@ async function populateSelectCoin() {
 
 populateSelectCoin();
 
-chrome.storage.local.clear(function() {
-  var error = chrome.runtime.lastError;
-  if (error) {
-      console.error(error);
-  }
-});
+/*---- Change and update storage ----*/
 
-function addCoinToStorage(coin){ 
-  
+function addCoinToStorage(coin){  
   chrome.storage.sync.get(['coins'], function(result) {
-    console.log('Value currently is ' + result.coins);
-    
+    //console.log('Value currently is ' + result.coins);    
     if(result.coins) {
-      console.log("tem coins", result.coins)      
+      // console.log("tem coins", result.coins)      
       const newArray = [...result.coins, coin]
 
       chrome.storage.sync.set({'coins': newArray}, function() {
@@ -81,9 +78,34 @@ function addCoinToStorage(coin){
       }); 
     }
   });
-  
+  location.reload()
 }
 
+function deleteCoinFromStorage(id) {
+  chrome.storage.sync.get(['coins'], function(result) {
+    //console.log('Value currently is ' + result.coins);    
+    if(result.coins) {
+      // console.log("tem coins", result.coins)   
+      const filterResult = result.coins.filter(coin => coin.id !== id)
+      console.log(filterResult)
+            
+      chrome.storage.sync.set({'coins': filterResult}, function() {
+        console.log('Value is set to ' + coin);
+      });      
+    }
+  });
+  location.reload()
+}
+
+/*---- Listen to form submit ----*/
+
+formSelectCoin.addEventListener("submit", function(evt) {
+  evt.preventDefault();
+  const { text:name, value:id } = dropdown.options[dropdown.selectedIndex]
+  addCoinToStorage({ id, name })
+});
+
+/*
 chrome.storage.onChanged.addListener(function(changes) {
   var storageChange = changes['coins'];
   console.log('New coind added ' +
@@ -91,10 +113,49 @@ chrome.storage.onChanged.addListener(function(changes) {
               storageChange.oldValue,
               storageChange.newValue); 
 });
+*/
 
-formSelectCoin.addEventListener("submit", function(evt) {
-  evt.preventDefault();
-  console.log(evt.target[0].value)
-  addCoinToStorage(evt.target[0].value)
+
+/*---- Crate selected Coin List ----*/
+
+function createCoinItem(id, name) {
+  let itemCoin = document.createElement('div')
+  let itemContent = document.createTextNode(name)
+  let deleteButton = document.createElement('button')
+  deleteButton.innerHTML = "x"
+  deleteButton.id = id
+  deleteButton.addEventListener('click', (e) => deleteCoinFromStorage(e.target.id))
+  itemCoin.className = 'coin-item'
+  itemCoin.appendChild(itemContent)
+  itemCoin.appendChild(deleteButton)
+  divCoins.appendChild(itemCoin)
+}
+
+function createCoinsList(coins) {
+  coins.forEach((item) => {
+    createCoinItem(item.id, item.name)
+  });
+} 
+
+function populateSelecteds() {
+  chrome.storage.sync.get(['coins'], function (obj) {  
+    createCoinsList(obj.coins)
+  })
+}
+
+/* Run on Start */
+populateSelecteds();
+
+/*---- Clear storage Functions ----*/
+
+chrome.storage.local.clear(function() {
+  var error = chrome.runtime.lastError;
+  if (error) {
+      console.error(error);
+  }
 });
-/* Select */
+
+// chrome.storage.local.clear()
+// chrome.storage.sync.clear()
+
+/*---- Clear storage Functions ----*/
