@@ -1,3 +1,5 @@
+@import url('https://css.gg/extension.css');
+
 main {
   min-width: 350px;
 }
@@ -6,6 +8,21 @@ header {
   background-color: var(--white-bg-color);
   width: 100%;
   padding: 0.5rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#go-to-options {
+  background-color: var(--light-bg-color);
+  border:none;
+  border-radius: 0.25rem;
+}
+
+#go-to-options svg{
+  color: var(--subheadline-color);
+  display: block;
+  padding: 0.25rem;
 }
 
 h2 {
